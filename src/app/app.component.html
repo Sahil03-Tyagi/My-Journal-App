@@ -1,0 +1,45 @@
+<div class="calendar-container">
+  <h1 style="text-align: center;">My Journal</h1>
+  <full-calendar
+    [options]="calendarOptions"
+    #calen
+  ></full-calendar>
+ 
+  <!-- Modal for adding/modifying events -->
+  <div class="modal" [ngClass]="{'show': showModal}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <button style="float: right;" type="button" class="close" (click)="resetForm()">
+          <span>&times;</span>
+        </button>
+        <div class="modal-header">
+          <h5 class="modal-title">{{ modalTitle }}</h5>
+        </div>
+
+        <div class="modal-body">
+          <form (ngSubmit)="submitEvent()" #eventForm="ngForm">
+            <div class="form-group">
+              <label for="title">Event Title:</label>
+              <input type="text" class="form-control" id="title" name="title" [(ngModel)]="eventFormModel.title" required>
+            </div><br>
+            <div class="form-group">
+              <label for="url">Event URL:</label>
+              <input type="text" class="form-control" id="url" name="url" [(ngModel)]="eventFormModel.url">
+            </div><br>
+            <div class="form-group">
+              <label for="start">Start Date:</label>
+              <input type="datetime-local" class="form-control" id="start" name="start" [(ngModel)]="eventFormModel.start" required>
+            </div><br>
+            <div class="form-group">
+              <label for="end">End Date:</label>
+              <input type="datetime-local" class="form-control" id="end" name="end" [(ngModel)]="eventFormModel.end" required>
+            </div><br>
+            <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Submit</button>
+            <button type="button" *ngIf="modalTitle=='Modify Event'" class="btn btn-primary" (click)="deleteEvent()">Delete</button>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
